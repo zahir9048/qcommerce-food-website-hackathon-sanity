@@ -1,0 +1,48 @@
+import { client } from "./client";
+import { ICategory } from "./interfaces";
+import { ICategoryWithFoods } from "./interfaces"; 
+
+export const getAllCategories = async () => {
+  try {
+    const getAllCategoriesQuery = `*[_type == "category" && available == true] {
+            _id,
+            name,
+            "imageUrl": image.asset->url,
+            available
+          }
+          `;
+
+    const categories: ICategory[] = await client.fetch(getAllCategoriesQuery, {}, { next: { revalidate: 1800 } });
+    return categories;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch categories. Please try again later.");
+  }
+};
+
+
+export const getCategoriesWithFoods = async (): Promise<ICategoryWithFoods[]> => {
+  try {
+    const query = `*[_type == "category" && available == true] {
+      _id,
+      name,
+      "imageUrl": image.asset->url,
+      available,
+      "foods": *[_type == "food" && references(^._id) && available == true] {
+        _id,
+        name,
+        price,
+        "imageUrl": image.asset->url,
+        description,
+        available
+      }
+    }`;
+
+    const categoriesWithFoods: ICategoryWithFoods[] = await client.fetch(query, {}, { next: { revalidate: 1800 } });
+    return categoriesWithFoods;
+  } catch (error) {
+    console.error("Error fetching categories with foods:", error);
+    throw new Error("Failed to fetch categories with foods. Please try again later.");
+  }
+};
+
