@@ -60,6 +60,7 @@ export const getFoodItemById = async (slug: string) => {
   }`;
 
   const foodItem = await client.fetch(query, { slug });
+  console.log(foodItem);
   if (foodItem) {
     foodItem.images = [foodItem.mainImageUrl, ...foodItem.images];
   }
