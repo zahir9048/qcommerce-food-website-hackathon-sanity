@@ -23,3 +23,14 @@ export interface ICategoryWithFoods {
   foods: IFood[];
 }
 
+export interface IFoodItem {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  stock: number;
+  description: string;
+  mainImageUrl: string;
+  images: string[];
+}
+

@@ -46,3 +46,23 @@ export const getCategoriesWithFoods = async (): Promise<ICategoryWithFoods[]> =>
   }
 };
 
+
+export const getFoodItemById = async (slug: string) => {
+  const query = `*[_type == "food" && _id == $slug][0] {
+    _id,
+    name,
+    price,
+    "category": category->name,
+    stock,
+    description,
+    "mainImageUrl": image.asset->url, // Resolve the main image URL
+    "images": images[].asset->url         // Resolve the array of image URLs
+  }`;
+
+  const foodItem = await client.fetch(query, { slug });
+  if (foodItem) {
+    foodItem.images = [foodItem.mainImageUrl, ...foodItem.images];
+  }
+  return foodItem;
+};
+

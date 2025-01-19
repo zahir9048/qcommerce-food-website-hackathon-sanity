@@ -62,5 +62,11 @@ export const food = {
       title: "Available",
       description: "Availability status of the food item",
     },
+    {
+      name: "stock",
+      type: "number",
+      title: "Stock",
+      description: "Inventory",
+    }
   ],
 };
