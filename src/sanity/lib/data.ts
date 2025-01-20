@@ -1,6 +1,7 @@
 import { client } from "./client";
 import { ICategory } from "./interfaces";
 import { ICategoryWithFoods } from "./interfaces"; 
+import { IFoodItem } from "./interfaces"; 
 
 export const getAllCategories = async () => {
   try {
@@ -59,10 +60,11 @@ export const getFoodItemById = async (slug: string) => {
     "images": images[].asset->url         // Resolve the array of image URLs
   }`;
 
-  const foodItem = await client.fetch(query, { slug });
+  const foodItem:IFoodItem = await client.fetch(query, { slug });
   console.log(foodItem);
   if (foodItem) {
-    foodItem.images = [foodItem.mainImageUrl, ...foodItem.images];
+    const mainImageUrl = foodItem.mainImageUrl || '/default-image.jpg';
+    foodItem.images = [mainImageUrl, ...(foodItem.images || [])];
   }
   return foodItem;
 };
