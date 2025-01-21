@@ -1,12 +1,14 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { SignedIn, useAuth, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
-
+  
+  const { userId } = useAuth();
   // Close the dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -72,30 +74,35 @@ export default function Header() {
             <li className="hover:text-[#FF9F0D]">
               <Link href="/aboutus">About Us</Link>
             </li>
-            <li ref={dropdownRef} className="relative hover:text-[#FF9F0D]">
-              {/* Dropdown Button */}
-              <button
-                className="flex items-center gap-1"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              >
-                Login <i className="bi bi-chevron-down"></i>
-              </button>
-              {/* Dropdown Menu */}
-              {isDropdownOpen && (
-                <ul className="absolute left-0 top-full mt-2 bg-white text-black shadow-lg rounded-lg w-48 z-30">
-                  <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
-                    <a href="/signin" className="block px-4 py-2">
-                      Sign In
-                    </a>
-                  </li>
-                  <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
-                    <a href="/signup" className="block px-4 py-2">
-                      Sign Up
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </li>
+            {userId ? ( // If the user is signed in
+              null 
+            ) : (
+              // If the user is signed out
+              <li ref={dropdownRef} className="relative hover:text-[#FF9F0D]">
+                {/* Dropdown Button */}
+                <button
+                  className="flex items-center gap-1"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  Login <i className="bi bi-chevron-down"></i>
+                </button>
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <ul className="absolute left-0 top-full mt-2 bg-white text-black shadow-lg rounded-lg w-48 z-30">
+                    <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
+                      <a href="/signin" className="block px-4 py-2">
+                        Sign In
+                      </a>
+                    </li>
+                    <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
+                      <a href="/signup" className="block px-4 py-2">
+                        Sign Up
+                      </a>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            )}
           </ul>
 
           {/* Search Bar */}
@@ -123,6 +130,10 @@ export default function Header() {
           <Link href="/shopping">
             <i className="bi bi-handbag"></i>
           </Link>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
 
