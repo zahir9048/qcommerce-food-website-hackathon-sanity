@@ -4,9 +4,10 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Inter } from "@next/font/google";
-import {
-  ClerkProvider
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import ReduxProvider from "./components/ReduxProvider";
+import CartLoader from "./components/cartLoader";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -27,11 +28,15 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`antialiased`}>
-          <div className={`${inter.className}`}>
-            <Header />
-            {children}
-            <Footer />
-          </div>
+          <ReduxProvider>
+            <CartLoader />
+            <div className={`${inter.className}`}>
+              <Header />
+              {children}
+              <Footer />
+            </div>
+            <Toaster position="bottom-right" />
+          </ReduxProvider>
         </body>
       </html>
     </ClerkProvider>

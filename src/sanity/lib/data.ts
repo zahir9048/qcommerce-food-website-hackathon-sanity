@@ -60,8 +60,7 @@ export const getFoodItemById = async (slug: string) => {
     "images": images[].asset->url         // Resolve the array of image URLs
   }`;
 
-  const foodItem:IFoodItem = await client.fetch(query, { slug });
-  console.log(foodItem);
+  const foodItem:IFoodItem = await client.fetch(query, { slug }, { next: { revalidate: 0 } });
   if (foodItem) {
     const mainImageUrl = foodItem.mainImageUrl || '/default-image.jpg';
     foodItem.images = [mainImageUrl, ...(foodItem.images || [])];

@@ -74,7 +74,8 @@ export default function Header() {
             <li className="hover:text-[#FF9F0D]">
               <Link href="/aboutus">About Us</Link>
             </li>
-            {userId ? ( // If the user is signed in
+            {userId ? ( 
+              // If the user is signed in
               null 
             ) : (
               // If the user is signed out
