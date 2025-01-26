@@ -21,6 +21,8 @@
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.70.0",
     "bootstrap-icons": "^1.11.3",
+    "countries-list": "^3.1.1",
+    "country-list": "^2.3.0",
     "framer-motion": "^11.13.1",
     "next": "^14.2.20",
     "next-navigation": "^1.0.6",
@@ -35,6 +37,7 @@
     "swiper": "^11.1.15"
   },
   "devDependencies": {
+    "@types/country-list": "^2.1.4",
     "@types/node": "^20",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18",

@@ -39,7 +39,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
         },
       })
     );
-    router.push("/shopping");
+    router.push("/cart");
   };
 
   if (!isLoaded) {

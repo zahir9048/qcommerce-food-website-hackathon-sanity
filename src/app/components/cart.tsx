@@ -1,17 +1,17 @@
-// components/Cart.tsx
-"use client"; // Mark as Client Component
+"use client";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
-import { removeItem, updateQuantity } from "@/store/cartSlice"; // Import the updateQuantity action
-import { useUser } from "@clerk/nextjs"; // Import Clerk's useUser hook
+import { removeItem, updateQuantity  } from "@/store/cartSlice";
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.cart.items);
   const [isMounted, setIsMounted] = useState(false);
-  const { user } = useUser(); // Get the signed-in user
+  const { user } = useUser();
 
   useEffect(() => {
     setIsMounted(true);
@@ -52,7 +52,6 @@ export default function Cart() {
     dispatch(updateQuantity({ userId: user.id, productId, quantity: newQuantity }));
   };
 
-  // Calculate the total cost of all items in the cart
   const totalCost = items.reduce((total, item) => {
     return total + item.product.price * item.quantity;
   }, 0);
@@ -129,6 +128,7 @@ export default function Cart() {
             <h3 className="text-xl font-semibold">
               Total: ${totalCost.toFixed(2)}
             </h3>
+            <Link href="/checkout">Proceed to checkout</Link>
           </div>
         </>
       )}

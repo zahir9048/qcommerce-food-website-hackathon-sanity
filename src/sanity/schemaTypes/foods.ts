@@ -10,9 +10,9 @@ export const food = {
     },
     {
       name: "category",
-      type: "reference", // Reference to the category schema
+      type: "reference",
       title: "Category",
-      to: [{ type: "category" }], // Connects to the 'category' schema
+      to: [{ type: "category" }], 
       description: "Select the category of the food item (e.g., Burger, Drink, etc.)",
     },
     {

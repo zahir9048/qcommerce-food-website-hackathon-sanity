@@ -128,7 +128,7 @@ export default function Header() {
           </form>
 
           {/* Shopping Icon */}
-          <Link href="/shopping">
+          <Link href="/cart">
             <i className="bi bi-handbag"></i>
           </Link>
 
