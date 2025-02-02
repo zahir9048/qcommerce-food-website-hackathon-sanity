@@ -1,8 +1,12 @@
-export default function Home() {
-  
-    return (
+import { Suspense } from "react";
+import { CheckoutSuccess } from "../components/CheckoutSuccess";
 
-        <>
-            <h1 className="text-[40px]">Order Successful</h1>
-        </>
-    )}
+export default function CheckoutSuccessPage() {
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <CheckoutSuccess />
+      </Suspense>
+    </>
+  );
+}

@@ -54,7 +54,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
       className={`${
         isOutOfStock
           ? "bg-gray-400 cursor-not-allowed" // Gray background and disabled cursor
-          : "bg-blue-500 hover:bg-blue-600" // Blue background and hover effect
+          : "bg-[#ff9f0d] hover:bg-[#FFF] hover:text-[#ff9f0d] hover:border hover:border-[#ff9f0d]" // Blue background and hover effect
       } text-white px-4 py-2 rounded`}
     >
       {isOutOfStock ? "Out of Stock" : "Add to Cart"}

@@ -1,5 +1,5 @@
-import { SignIn } from '@clerk/nextjs';
-import Image from 'next/image';
+import { SignIn } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function SignInPage() {
   return (
@@ -18,7 +18,9 @@ export default function SignInPage() {
             Sign In
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <a href="/" className="text-xl sm:text-2xl md:text-3xl">Home</a>
+            <a href="/" className="text-xl sm:text-2xl md:text-3xl">
+              Home
+            </a>
             <div className="flex items-center">
               <Image
                 src="/Vector.png"
@@ -26,7 +28,10 @@ export default function SignInPage() {
                 height={10}
                 alt="Vector Icon"
               />
-              <a href="/signin" className="ml-2 text-xl sm:text-2xl md:text-3xl text-[#FF9F0D]">
+              <a
+                href="/signin"
+                className="ml-2 text-xl sm:text-2xl md:text-3xl text-[#FF9F0D]"
+              >
                 Sign In
               </a>
             </div>
@@ -34,12 +39,8 @@ export default function SignInPage() {
         </div>
       </div>
 
-      {/* Signin Form Section */}
       <section className="max-w-[1320px] mx-auto py-[50px] px-[20px] lg:px-[60px] relative bg-white">
-        <div className="container mx-auto max-w-md bg-white shadow-lg rounded-md p-8">
-          <h3 className="text-2xl font-bold mb-6 text-center text-black">Sign In</h3>
-          
-          {/* Embed Clerk's SignIn Component */}
+        <div className="container mx-auto max-w-md bg-white rounded-md">
           <SignIn />
         </div>
       </section>

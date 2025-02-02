@@ -36,9 +36,7 @@ export default function SignUpPage() {
 
       {/* Signup Form Section */}
       <section className="max-w-[1320px] mx-auto py-[50px] px-[20px] lg:px-[60px] relative bg-white">
-        <div className="container mx-auto max-w-md bg-white shadow-lg rounded-md p-8">
-          <h3 className="text-2xl font-bold mb-6 text-center text-black">Sign Up</h3>
-          
+        <div className="container mx-auto max-w-md bg-white rounded-md">          
           {/* Embed Clerk's SignUp Component */}
           <SignUp />
         </div>

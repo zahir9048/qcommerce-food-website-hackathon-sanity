@@ -2,13 +2,24 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { SignedIn, useAuth, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
-  
+
   const { userId } = useAuth();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent page reload
+    if (searchTerm.trim()) {
+      router.push(`/shop?search=${encodeURIComponent(searchTerm)}`);
+    }
+  };
   // Close the dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -25,6 +36,10 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <div
@@ -57,27 +72,34 @@ export default function Header() {
         >
           <ul className="flex flex-col lg:flex-row gap-[20px] lg:gap-[25px] xl:gap-[40px]">
             <li className="hover:text-[#FF9F0D]">
-              <Link href="/">Home</Link>
+              <Link href="/" onClick={closeMobileMenu}>
+                Home
+              </Link>
             </li>
             <li className="hover:text-[#FF9F0D]">
-              <Link href="/menu">Menu</Link>
+              <Link href="/shop" onClick={closeMobileMenu}>
+                Our Shop
+              </Link>
             </li>
             <li className="hover:text-[#FF9F0D]">
-              <Link href="/chef">Our Chefs</Link>
+              <Link href="/chef" onClick={closeMobileMenu}>
+                Our Chefs
+              </Link>
+            </li>
+            <li className="hover:text-[#FF9F0D]">
+              <Link href="/menu" onClick={closeMobileMenu}>
+                Menu
+              </Link>
             </li>
             {/* <li className="hover:text-[#FF9F0D]">
               <Link href="/faq">FAQs</Link>
             </li> */}
             <li className="hover:text-[#FF9F0D]">
-              <Link href="/shop">Our Shop</Link>
+              <Link href="/aboutus" onClick={closeMobileMenu}>
+                About Us
+              </Link>
             </li>
-            <li className="hover:text-[#FF9F0D]">
-              <Link href="/aboutus">About Us</Link>
-            </li>
-            {userId ? ( 
-              // If the user is signed in
-              null 
-            ) : (
+            {userId ? null : ( // If the user is signed in
               // If the user is signed out
               <li ref={dropdownRef} className="relative hover:text-[#FF9F0D]">
                 {/* Dropdown Button */}
@@ -91,12 +113,26 @@ export default function Header() {
                 {isDropdownOpen && (
                   <ul className="absolute left-0 top-full mt-2 bg-white text-black shadow-lg rounded-lg w-48 z-30">
                     <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
-                      <a href="/signin" className="block px-4 py-2">
+                      <a
+                        href="/signin"
+                        className="block px-4 py-2"
+                        onClick={() => {
+                          closeMobileMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
                         Sign In
                       </a>
                     </li>
                     <li className="hover:bg-gray-100 hover:text-[#FF9F0D]">
-                      <a href="/signup" className="block px-4 py-2">
+                      <a
+                        href="/signup"
+                        className="block px-4 py-2"
+                        onClick={() => {
+                          closeMobileMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
                         Sign Up
                       </a>
                     </li>
@@ -107,21 +143,25 @@ export default function Header() {
           </ul>
 
           {/* Search Bar */}
-          <form className="min-w-[250px] xl:min-w-[280px] bg-transparent mt-4 lg:mt-0">
+          <form
+            className="min-w-[250px] xl:min-w-[280px] bg-transparent mt-4 lg:mt-0"
+            onSubmit={handleSearch}
+          >
             <div className="relative bg-transparent flex">
               <input
                 type="search"
                 id="default-search"
                 className="block bg-transparent p-4 text-white border border-[#FF9F0D] rounded-[27px] w-[100%]"
                 placeholder="Search..."
-                required
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button
                 type="submit"
-                className="text-white p-3 bg-transparent absolute inset-y-0 end-0 pe-3"
+                className="group text-white p-3 bg-transparent absolute inset-y-0 end-0 pe-3"
               >
                 <div className="flex items-center pointer-events-none">
-                  <i className="bi bi-search text-white"></i>
+                  <i className="bi bi-search text-white group-hover:text-[#FF9F0D] transition-colors duration-200"></i>
                 </div>
               </button>
             </div>
